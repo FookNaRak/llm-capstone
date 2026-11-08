@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PC Parts Check</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <main>
+    <header>
+      <p class="eyebrow">HARDWARE COMPATIBILITY</p>
+      <h1>PC Parts Check</h1>
+      <p>เช็ก CPU เมนบอร์ด และ RAM จากสเปกผู้ผลิตก่อนจัดชุด</p>
+    </header>
+    <div class="panels">
+      <section aria-labelledby="ask-title">
+        <p class="eyebrow">01 · LLM ASSISTANT</p>
+        <h2 id="ask-title">ถามเป็นภาษาของคุณ</h2>
+        <form id="ask">
+          <label for="question">รายการอะไหล่หรือคำถาม</label>
+          <textarea id="question" name="query" required maxlength="1200" rows="4"
+            placeholder="TUF B650-PLUS WIFI กับ Ryzen 5 7600 ใส่ RAM รุ่น KF432C16BBK2/16 ได้ไหม"></textarea>
+          <button type="submit">ถามผู้ช่วย</button>
+        </form>
+      </section>
+      <section aria-labelledby="check-title">
+        <p class="eyebrow">02 · CATALOG CHECK</p>
+        <h2 id="check-title">เลือกรุ่นเพื่อตรวจโดยตรง</h2>
+        <form id="check">
+          <label for="board">เมนบอร์ด</label>
+          <select id="board" name="motherboard" required><option value="">เลือกรุ่น</option></select>
+          <label for="cpu">CPU</label>
+          <select id="cpu" name="cpu"><option value="">ข้ามได้</option></select>
+          <label for="memory">RAM</label>
+          <select id="memory" name="memory"><option value="">ข้ามได้</option></select>
+          <label for="bios">BIOS ปัจจุบัน (ถ้าทราบ)</label>
+          <input id="bios" name="bios" inputmode="numeric" maxlength="12" pattern="[0-9]{1,12}">
+          <button type="submit">ตรวจความเข้ากันได้</button>
+        </form>
+      </section>
+    </div>
+    <section id="output" aria-live="polite" aria-label="ผลการตรวจ" hidden></section>
+    <footer>แคตตาล็อกมีเฉพาะรุ่นที่ระบุ การตรวจ RAM ครอบคลุมชนิด DDR</footer>
+  </main>
+</body>
+</html>
