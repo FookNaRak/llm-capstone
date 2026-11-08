@@ -1,0 +1,1 @@
+"""PC Parts Check application."""
