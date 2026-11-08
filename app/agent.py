@@ -13,7 +13,7 @@ MODEL = "gemma-4-E4B-it"
 MAX_ROUNDS = 5
 BIOS_VERSION = re.compile(
     r"(?:\bbios\b|ไบออส)\s*(?:(?:version|เวอร์ชัน|เวอร์ชั่น|v)\s*)?"
-    r"[:=]?\s*([0-9]{1,12})(?![\w.])",
+    r"[:=]?\s*([0-9]{1,12})(?!\w|\.[0-9])",
     re.IGNORECASE,
 )
 
