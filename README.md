@@ -1,5 +1,7 @@
 # PC Parts Check
 
+The Thai salary tax assistant is a separate capstone app in this workspace. See [Thai Tax Assistant setup, evaluation, and demo](tax_app/README.md).
+
 A capstone for first-time PC builders and people upgrading an existing PC. Ask in Thai or English whether the CPU, motherboard and RAM you named can be used together. The app checks a small catalog of AMD AM4 and AM5 parts and cites manufacturer evidence. A direct checker works without model credentials.
 
 ## Run on Windows

@@ -1,0 +1,1098 @@
+{
+  "keyword": {
+    "recall_at_3": 0.3333333333333333,
+    "cases": [
+      {
+        "query": "จ่ายค่าไฟบ้านผ่านแอป เอาไปเข้า e-receipt ได้เปล่า",
+        "expected": [
+          "receipt-excluded"
+        ],
+        "hits": [
+          "receipt-cap",
+          "receipt-excluded",
+          "receipt-period"
+        ],
+        "recall": 1.0
+      },
+      {
+        "query": "จ่ายค่าเน็ตรายเดือน มีใบกำกับ ใช้ช้อปลดหย่อนได้ไหม",
+        "expected": [
+          "receipt-excluded"
+        ],
+        "hits": [],
+        "recall": 0.0
+      },
+      {
+        "query": "เติมน้ำมันรถตอนมกรา ใช้ Easy E-Receipt ได้หรือเปล่า",
+        "expected": [
+          "receipt-excluded"
+        ],
+        "hits": [
+          "receipt-cap",
+          "receipt-excluded",
+          "receipt-period"
+        ],
+        "recall": 1.0
+      },
+      {
+        "query": "เอาค่าโรงแรมไปใช้สิทธิช้อปต้นปีได้ไหม",
+        "expected": [
+          "receipt-excluded"
+        ],
+        "hits": [],
+        "recall": 0.0
+      },
+      {
+        "query": "ซื้อวันที่ 1 มีนาคม 2568 ยังทันมาตรการไหม",
+        "expected": [
+          "receipt-period"
+        ],
+        "hits": [
+          "scope",
+          "brackets",
+          "receipt-period"
+        ],
+        "recall": 1.0
+      },
+      {
+        "query": "ร้านออกใบเสร็จกระดาษอย่างเดียว ใช้ช้อปลดหย่อนได้ไหม",
+        "expected": [
+          "receipt-period"
+        ],
+        "hits": [],
+        "recall": 0.0
+      },
+      {
+        "query": "ร้านไม่ได้จดแวต ขาย ebook ใช้สิทธิได้ไหม",
+        "expected": [
+          "receipt-nonvat"
+        ],
+        "hits": [],
+        "recall": 0.0
+      },
+      {
+        "query": "ซื้อหนังสือจากร้านไม่จด VAT เข้าข่ายไหม",
+        "expected": [
+          "receipt-nonvat"
+        ],
+        "hits": [
+          "receipt-nonvat"
+        ],
+        "recall": 1.0
+      },
+      {
+        "query": "ซื้อโอทอป มีวงเงินเพิ่มจากเพดานปกติเท่าไร",
+        "expected": [
+          "receipt-cap"
+        ],
+        "hits": [],
+        "recall": 0.0
+      },
+      {
+        "query": "ยอดใบเสร็จกลุ่มพิเศษนับซ้ำสองเพดานได้ไหม",
+        "expected": [
+          "receipt-cap"
+        ],
+        "hits": [],
+        "recall": 0.0
+      },
+      {
+        "query": "ประกันชีวิตและประกันสุขภาพของตัวเองมีเพดานรวมกันไหม",
+        "expected": [
+          "health"
+        ],
+        "hits": [],
+        "recall": 0.0
+      },
+      {
+        "query": "กรมธรรม์ชีวิตอายุแค่ห้าปี เข้าเกณฑ์ลดหย่อนไหม",
+        "expected": [
+          "life"
+        ],
+        "hits": [],
+        "recall": 0.0
+      },
+      {
+        "query": "ค่าลดหย่อนส่วนตัวคนโสดได้เท่าไหร่",
+        "expected": [
+          "personal"
+        ],
+        "hits": [],
+        "recall": 0.0
+      },
+      {
+        "query": "มีทั้งเงินเดือนและฟรีแลนซ์ ใช้แบบ ภงด 91 ได้หรือเปล่า",
+        "expected": [
+          "scope"
+        ],
+        "hits": [
+          "scope"
+        ],
+        "recall": 1.0
+      },
+      {
+        "query": "พอเงินได้สุทธิเกินสามแสน จะเข้าอัตราภาษีขั้นไหน",
+        "expected": [
+          "brackets"
+        ],
+        "hits": [],
+        "recall": 0.0
+      }
+    ]
+  },
+  "hybrid": {
+    "recall_at_3": 0.9333333333333333,
+    "cases": [
+      {
+        "query": "จ่ายค่าไฟบ้านผ่านแอป เอาไปเข้า e-receipt ได้เปล่า",
+        "expected": [
+          "receipt-excluded"
+        ],
+        "hits": [
+          "receipt-period",
+          "receipt-excluded",
+          "receipt-cap"
+        ],
+        "recall": 1.0
+      },
+      {
+        "query": "จ่ายค่าเน็ตรายเดือน มีใบกำกับ ใช้ช้อปลดหย่อนได้ไหม",
+        "expected": [
+          "receipt-excluded"
+        ],
+        "hits": [
+          "expense",
+          "personal",
+          "receipt-period"
+        ],
+        "recall": 0.0
+      },
+      {
+        "query": "เติมน้ำมันรถตอนมกรา ใช้ Easy E-Receipt ได้หรือเปล่า",
+        "expected": [
+          "receipt-excluded"
+        ],
+        "hits": [
+          "receipt-period",
+          "receipt-excluded",
+          "receipt-cap"
+        ],
+        "recall": 1.0
+      },
+      {
+        "query": "เอาค่าโรงแรมไปใช้สิทธิช้อปต้นปีได้ไหม",
+        "expected": [
+          "receipt-excluded"
+        ],
+        "hits": [
+          "receipt-excluded",
+          "brackets",
+          "expense"
+        ],
+        "recall": 1.0
+      },
+      {
+        "query": "ซื้อวันที่ 1 มีนาคม 2568 ยังทันมาตรการไหม",
+        "expected": [
+          "receipt-period"
+        ],
+        "hits": [
+          "receipt-period",
+          "scope",
+          "brackets"
+        ],
+        "recall": 1.0
+      },
+      {
+        "query": "ร้านออกใบเสร็จกระดาษอย่างเดียว ใช้ช้อปลดหย่อนได้ไหม",
+        "expected": [
+          "receipt-period"
+        ],
+        "hits": [
+          "receipt-period",
+          "personal",
+          "expense"
+        ],
+        "recall": 1.0
+      },
+      {
+        "query": "ร้านไม่ได้จดแวต ขาย ebook ใช้สิทธิได้ไหม",
+        "expected": [
+          "receipt-nonvat"
+        ],
+        "hits": [
+          "receipt-nonvat",
+          "receipt-cap"
+        ],
+        "recall": 1.0
+      },
+      {
+        "query": "ซื้อหนังสือจากร้านไม่จด VAT เข้าข่ายไหม",
+        "expected": [
+          "receipt-nonvat"
+        ],
+        "hits": [
+          "receipt-nonvat",
+          "receipt-cap"
+        ],
+        "recall": 1.0
+      },
+      {
+        "query": "ซื้อโอทอป มีวงเงินเพิ่มจากเพดานปกติเท่าไร",
+        "expected": [
+          "receipt-cap"
+        ],
+        "hits": [
+          "receipt-cap",
+          "expense",
+          "health"
+        ],
+        "recall": 1.0
+      },
+      {
+        "query": "ยอดใบเสร็จกลุ่มพิเศษนับซ้ำสองเพดานได้ไหม",
+        "expected": [
+          "receipt-cap"
+        ],
+        "hits": [
+          "receipt-cap",
+          "receipt-period",
+          "health"
+        ],
+        "recall": 1.0
+      },
+      {
+        "query": "ประกันชีวิตและประกันสุขภาพของตัวเองมีเพดานรวมกันไหม",
+        "expected": [
+          "health"
+        ],
+        "hits": [
+          "health",
+          "life",
+          "personal"
+        ],
+        "recall": 1.0
+      },
+      {
+        "query": "กรมธรรม์ชีวิตอายุแค่ห้าปี เข้าเกณฑ์ลดหย่อนไหม",
+        "expected": [
+          "life"
+        ],
+        "hits": [
+          "life",
+          "personal",
+          "receipt-cap"
+        ],
+        "recall": 1.0
+      },
+      {
+        "query": "ค่าลดหย่อนส่วนตัวคนโสดได้เท่าไหร่",
+        "expected": [
+          "personal"
+        ],
+        "hits": [
+          "personal",
+          "expense"
+        ],
+        "recall": 1.0
+      },
+      {
+        "query": "มีทั้งเงินเดือนและฟรีแลนซ์ ใช้แบบ ภงด 91 ได้หรือเปล่า",
+        "expected": [
+          "scope"
+        ],
+        "hits": [
+          "scope",
+          "expense",
+          "receipt-cap"
+        ],
+        "recall": 1.0
+      },
+      {
+        "query": "พอเงินได้สุทธิเกินสามแสน จะเข้าอัตราภาษีขั้นไหน",
+        "expected": [
+          "brackets"
+        ],
+        "hits": [
+          "brackets",
+          "expense",
+          "scope"
+        ],
+        "recall": 1.0
+      }
+    ]
+  },
+  "calculator": {
+    "correct": 15,
+    "cases": [
+      {
+        "input": {
+          "annual_income": 100000
+        },
+        "expected": {
+          "tax": "0",
+          "net_income": "0",
+          "expense": "50000"
+        },
+        "actual": {
+          "inputs": {
+            "tax_year": 2568,
+            "annual_income": "100000",
+            "life_premium": "0",
+            "health_premium": "0",
+            "receipt_general": "0",
+            "receipt_special": "0",
+            "withheld": null
+          },
+          "expense": "50000.0",
+          "personal": "60000",
+          "allowed": {
+            "life_premium": "0",
+            "health_premium": "0",
+            "receipt_base": "0",
+            "receipt_extra": "0"
+          },
+          "disallowed": {
+            "life_premium": "0",
+            "health_premium": "0",
+            "receipts": "0"
+          },
+          "net_income": "0",
+          "tax_before_optional": "0.00",
+          "tax": "0.00",
+          "tax_saved": "0.00",
+          "balance": null
+        },
+        "correct": true
+      },
+      {
+        "input": {
+          "annual_income": 310000
+        },
+        "expected": {
+          "tax": "0",
+          "net_income": "150000"
+        },
+        "actual": {
+          "inputs": {
+            "tax_year": 2568,
+            "annual_income": "310000",
+            "life_premium": "0",
+            "health_premium": "0",
+            "receipt_general": "0",
+            "receipt_special": "0",
+            "withheld": null
+          },
+          "expense": "100000",
+          "personal": "60000",
+          "allowed": {
+            "life_premium": "0",
+            "health_premium": "0",
+            "receipt_base": "0",
+            "receipt_extra": "0"
+          },
+          "disallowed": {
+            "life_premium": "0",
+            "health_premium": "0",
+            "receipts": "0"
+          },
+          "net_income": "150000",
+          "tax_before_optional": "0.00",
+          "tax": "0.00",
+          "tax_saved": "0.00",
+          "balance": null
+        },
+        "correct": true
+      },
+      {
+        "input": {
+          "annual_income": 310001
+        },
+        "expected": {
+          "tax": "0.05",
+          "net_income": "150001"
+        },
+        "actual": {
+          "inputs": {
+            "tax_year": 2568,
+            "annual_income": "310001",
+            "life_premium": "0",
+            "health_premium": "0",
+            "receipt_general": "0",
+            "receipt_special": "0",
+            "withheld": null
+          },
+          "expense": "100000",
+          "personal": "60000",
+          "allowed": {
+            "life_premium": "0",
+            "health_premium": "0",
+            "receipt_base": "0",
+            "receipt_extra": "0"
+          },
+          "disallowed": {
+            "life_premium": "0",
+            "health_premium": "0",
+            "receipts": "0"
+          },
+          "net_income": "150001",
+          "tax_before_optional": "0.05",
+          "tax": "0.05",
+          "tax_saved": "0.00",
+          "balance": null
+        },
+        "correct": true
+      },
+      {
+        "input": {
+          "annual_income": 460000
+        },
+        "expected": {
+          "tax": "7500"
+        },
+        "actual": {
+          "inputs": {
+            "tax_year": 2568,
+            "annual_income": "460000",
+            "life_premium": "0",
+            "health_premium": "0",
+            "receipt_general": "0",
+            "receipt_special": "0",
+            "withheld": null
+          },
+          "expense": "100000",
+          "personal": "60000",
+          "allowed": {
+            "life_premium": "0",
+            "health_premium": "0",
+            "receipt_base": "0",
+            "receipt_extra": "0"
+          },
+          "disallowed": {
+            "life_premium": "0",
+            "health_premium": "0",
+            "receipts": "0"
+          },
+          "net_income": "300000",
+          "tax_before_optional": "7500.00",
+          "tax": "7500.00",
+          "tax_saved": "0.00",
+          "balance": null
+        },
+        "correct": true
+      },
+      {
+        "input": {
+          "annual_income": 660000
+        },
+        "expected": {
+          "tax": "27500"
+        },
+        "actual": {
+          "inputs": {
+            "tax_year": 2568,
+            "annual_income": "660000",
+            "life_premium": "0",
+            "health_premium": "0",
+            "receipt_general": "0",
+            "receipt_special": "0",
+            "withheld": null
+          },
+          "expense": "100000",
+          "personal": "60000",
+          "allowed": {
+            "life_premium": "0",
+            "health_premium": "0",
+            "receipt_base": "0",
+            "receipt_extra": "0"
+          },
+          "disallowed": {
+            "life_premium": "0",
+            "health_premium": "0",
+            "receipts": "0"
+          },
+          "net_income": "500000",
+          "tax_before_optional": "27500.00",
+          "tax": "27500.00",
+          "tax_saved": "0.00",
+          "balance": null
+        },
+        "correct": true
+      },
+      {
+        "input": {
+          "annual_income": 910000
+        },
+        "expected": {
+          "tax": "65000"
+        },
+        "actual": {
+          "inputs": {
+            "tax_year": 2568,
+            "annual_income": "910000",
+            "life_premium": "0",
+            "health_premium": "0",
+            "receipt_general": "0",
+            "receipt_special": "0",
+            "withheld": null
+          },
+          "expense": "100000",
+          "personal": "60000",
+          "allowed": {
+            "life_premium": "0",
+            "health_premium": "0",
+            "receipt_base": "0",
+            "receipt_extra": "0"
+          },
+          "disallowed": {
+            "life_premium": "0",
+            "health_premium": "0",
+            "receipts": "0"
+          },
+          "net_income": "750000",
+          "tax_before_optional": "65000.00",
+          "tax": "65000.00",
+          "tax_saved": "0.00",
+          "balance": null
+        },
+        "correct": true
+      },
+      {
+        "input": {
+          "annual_income": 1160000
+        },
+        "expected": {
+          "tax": "115000"
+        },
+        "actual": {
+          "inputs": {
+            "tax_year": 2568,
+            "annual_income": "1160000",
+            "life_premium": "0",
+            "health_premium": "0",
+            "receipt_general": "0",
+            "receipt_special": "0",
+            "withheld": null
+          },
+          "expense": "100000",
+          "personal": "60000",
+          "allowed": {
+            "life_premium": "0",
+            "health_premium": "0",
+            "receipt_base": "0",
+            "receipt_extra": "0"
+          },
+          "disallowed": {
+            "life_premium": "0",
+            "health_premium": "0",
+            "receipts": "0"
+          },
+          "net_income": "1000000",
+          "tax_before_optional": "115000.00",
+          "tax": "115000.00",
+          "tax_saved": "0.00",
+          "balance": null
+        },
+        "correct": true
+      },
+      {
+        "input": {
+          "annual_income": 2160000
+        },
+        "expected": {
+          "tax": "365000"
+        },
+        "actual": {
+          "inputs": {
+            "tax_year": 2568,
+            "annual_income": "2160000",
+            "life_premium": "0",
+            "health_premium": "0",
+            "receipt_general": "0",
+            "receipt_special": "0",
+            "withheld": null
+          },
+          "expense": "100000",
+          "personal": "60000",
+          "allowed": {
+            "life_premium": "0",
+            "health_premium": "0",
+            "receipt_base": "0",
+            "receipt_extra": "0"
+          },
+          "disallowed": {
+            "life_premium": "0",
+            "health_premium": "0",
+            "receipts": "0"
+          },
+          "net_income": "2000000",
+          "tax_before_optional": "365000.00",
+          "tax": "365000.00",
+          "tax_saved": "0.00",
+          "balance": null
+        },
+        "correct": true
+      },
+      {
+        "input": {
+          "annual_income": 5260000
+        },
+        "expected": {
+          "tax": "1300000"
+        },
+        "actual": {
+          "inputs": {
+            "tax_year": 2568,
+            "annual_income": "5260000",
+            "life_premium": "0",
+            "health_premium": "0",
+            "receipt_general": "0",
+            "receipt_special": "0",
+            "withheld": null
+          },
+          "expense": "100000",
+          "personal": "60000",
+          "allowed": {
+            "life_premium": "0",
+            "health_premium": "0",
+            "receipt_base": "0",
+            "receipt_extra": "0"
+          },
+          "disallowed": {
+            "life_premium": "0",
+            "health_premium": "0",
+            "receipts": "0"
+          },
+          "net_income": "5100000",
+          "tax_before_optional": "1300000.00",
+          "tax": "1300000.00",
+          "tax_saved": "0.00",
+          "balance": null
+        },
+        "correct": true
+      },
+      {
+        "input": {
+          "annual_income": 600000,
+          "life_premium": 85000,
+          "health_premium": 30000
+        },
+        "expected": {
+          "tax": "11500",
+          "allowed": {
+            "life_premium": "85000",
+            "health_premium": "15000"
+          }
+        },
+        "actual": {
+          "inputs": {
+            "tax_year": 2568,
+            "annual_income": "600000",
+            "life_premium": "85000",
+            "health_premium": "30000",
+            "receipt_general": "0",
+            "receipt_special": "0",
+            "withheld": null
+          },
+          "expense": "100000",
+          "personal": "60000",
+          "allowed": {
+            "life_premium": "85000",
+            "health_premium": "15000",
+            "receipt_base": "0",
+            "receipt_extra": "0"
+          },
+          "disallowed": {
+            "life_premium": "0",
+            "health_premium": "15000",
+            "receipts": "0"
+          },
+          "net_income": "340000",
+          "tax_before_optional": "21500.00",
+          "tax": "11500.00",
+          "tax_saved": "10000.00",
+          "balance": null
+        },
+        "correct": true
+      },
+      {
+        "input": {
+          "annual_income": 600000,
+          "life_premium": 120000,
+          "health_premium": 20000
+        },
+        "expected": {
+          "tax": "11500",
+          "allowed": {
+            "life_premium": "100000",
+            "health_premium": "0"
+          }
+        },
+        "actual": {
+          "inputs": {
+            "tax_year": 2568,
+            "annual_income": "600000",
+            "life_premium": "120000",
+            "health_premium": "20000",
+            "receipt_general": "0",
+            "receipt_special": "0",
+            "withheld": null
+          },
+          "expense": "100000",
+          "personal": "60000",
+          "allowed": {
+            "life_premium": "100000",
+            "health_premium": "0",
+            "receipt_base": "0",
+            "receipt_extra": "0"
+          },
+          "disallowed": {
+            "life_premium": "20000",
+            "health_premium": "20000",
+            "receipts": "0"
+          },
+          "net_income": "340000",
+          "tax_before_optional": "21500.00",
+          "tax": "11500.00",
+          "tax_saved": "10000.00",
+          "balance": null
+        },
+        "correct": true
+      },
+      {
+        "input": {
+          "annual_income": 600000,
+          "health_premium": 30000
+        },
+        "expected": {
+          "tax": "19000",
+          "allowed": {
+            "health_premium": "25000"
+          }
+        },
+        "actual": {
+          "inputs": {
+            "tax_year": 2568,
+            "annual_income": "600000",
+            "life_premium": "0",
+            "health_premium": "30000",
+            "receipt_general": "0",
+            "receipt_special": "0",
+            "withheld": null
+          },
+          "expense": "100000",
+          "personal": "60000",
+          "allowed": {
+            "life_premium": "0",
+            "health_premium": "25000",
+            "receipt_base": "0",
+            "receipt_extra": "0"
+          },
+          "disallowed": {
+            "life_premium": "0",
+            "health_premium": "5000",
+            "receipts": "0"
+          },
+          "net_income": "415000",
+          "tax_before_optional": "21500.00",
+          "tax": "19000.00",
+          "tax_saved": "2500.00",
+          "balance": null
+        },
+        "correct": true
+      },
+      {
+        "input": {
+          "annual_income": 600000,
+          "receipt_general": 45000,
+          "receipt_special": 25000
+        },
+        "expected": {
+          "tax": "16500",
+          "allowed": {
+            "receipt_base": "30000",
+            "receipt_extra": "20000"
+          }
+        },
+        "actual": {
+          "inputs": {
+            "tax_year": 2568,
+            "annual_income": "600000",
+            "life_premium": "0",
+            "health_premium": "0",
+            "receipt_general": "45000",
+            "receipt_special": "25000",
+            "withheld": null
+          },
+          "expense": "100000",
+          "personal": "60000",
+          "allowed": {
+            "life_premium": "0",
+            "health_premium": "0",
+            "receipt_base": "30000",
+            "receipt_extra": "20000"
+          },
+          "disallowed": {
+            "life_premium": "0",
+            "health_premium": "0",
+            "receipts": "20000"
+          },
+          "net_income": "390000",
+          "tax_before_optional": "21500.00",
+          "tax": "16500.00",
+          "tax_saved": "5000.00",
+          "balance": null
+        },
+        "correct": true
+      },
+      {
+        "input": {
+          "annual_income": 600000,
+          "receipt_special": 25000
+        },
+        "expected": {
+          "tax": "19000",
+          "allowed": {
+            "receipt_base": "25000",
+            "receipt_extra": "0"
+          }
+        },
+        "actual": {
+          "inputs": {
+            "tax_year": 2568,
+            "annual_income": "600000",
+            "life_premium": "0",
+            "health_premium": "0",
+            "receipt_general": "0",
+            "receipt_special": "25000",
+            "withheld": null
+          },
+          "expense": "100000",
+          "personal": "60000",
+          "allowed": {
+            "life_premium": "0",
+            "health_premium": "0",
+            "receipt_base": "25000",
+            "receipt_extra": "0"
+          },
+          "disallowed": {
+            "life_premium": "0",
+            "health_premium": "0",
+            "receipts": "0"
+          },
+          "net_income": "415000",
+          "tax_before_optional": "21500.00",
+          "tax": "19000.00",
+          "tax_saved": "2500.00",
+          "balance": null
+        },
+        "correct": true
+      },
+      {
+        "input": {
+          "annual_income": 600000,
+          "withheld": 25000
+        },
+        "expected": {
+          "tax": "21500",
+          "balance": "-3500"
+        },
+        "actual": {
+          "inputs": {
+            "tax_year": 2568,
+            "annual_income": "600000",
+            "life_premium": "0",
+            "health_premium": "0",
+            "receipt_general": "0",
+            "receipt_special": "0",
+            "withheld": "25000"
+          },
+          "expense": "100000",
+          "personal": "60000",
+          "allowed": {
+            "life_premium": "0",
+            "health_premium": "0",
+            "receipt_base": "0",
+            "receipt_extra": "0"
+          },
+          "disallowed": {
+            "life_premium": "0",
+            "health_premium": "0",
+            "receipts": "0"
+          },
+          "net_income": "440000",
+          "tax_before_optional": "21500.00",
+          "tax": "21500.00",
+          "tax_saved": "0.00",
+          "balance": "-3500.00"
+        },
+        "correct": true
+      }
+    ]
+  },
+  "live": {
+    "baseline": 1,
+    "agent": 15,
+    "cases": [
+      {
+        "input": {
+          "annual_income": 100000
+        },
+        "expected": "0",
+        "baseline_finish_reason": "stop",
+        "baseline_text": "TAX=0",
+        "baseline": "0",
+        "agent": "0.00"
+      },
+      {
+        "input": {
+          "annual_income": 310000
+        },
+        "expected": "0",
+        "baseline_finish_reason": "stop",
+        "baseline_text": "TAX=17750",
+        "baseline": "17750",
+        "agent": "0.00"
+      },
+      {
+        "input": {
+          "annual_income": 310001
+        },
+        "expected": "0.05",
+        "baseline_finish_reason": "stop",
+        "baseline_text": "TAX=111000",
+        "baseline": "111000",
+        "agent": "0.05"
+      },
+      {
+        "input": {
+          "annual_income": 460000
+        },
+        "expected": "7500",
+        "baseline_finish_reason": "stop",
+        "baseline_text": "TAX=111000",
+        "baseline": "111000",
+        "agent": "7500.00"
+      },
+      {
+        "input": {
+          "annual_income": 660000
+        },
+        "expected": "27500",
+        "baseline_finish_reason": "stop",
+        "baseline_text": "TAX=108000",
+        "baseline": "108000",
+        "agent": "27500.00"
+      },
+      {
+        "input": {
+          "annual_income": 910000
+        },
+        "expected": "65000",
+        "baseline_finish_reason": "stop",
+        "baseline_text": "TAX=117000",
+        "baseline": "117000",
+        "agent": "65000.00"
+      },
+      {
+        "input": {
+          "annual_income": 1160000
+        },
+        "expected": "115000",
+        "baseline_finish_reason": "stop",
+        "baseline_text": "TAX=113000",
+        "baseline": "113000",
+        "agent": "115000.00"
+      },
+      {
+        "input": {
+          "annual_income": 2160000
+        },
+        "expected": "365000",
+        "baseline_finish_reason": "stop",
+        "baseline_text": "TAX=151200",
+        "baseline": "151200",
+        "agent": "365000.00"
+      },
+      {
+        "input": {
+          "annual_income": 5260000
+        },
+        "expected": "1300000",
+        "baseline_finish_reason": "stop",
+        "baseline_text": "TAX=1110000",
+        "baseline": "1110000",
+        "agent": "1300000.00"
+      },
+      {
+        "input": {
+          "annual_income": 600000,
+          "life_premium": 85000,
+          "health_premium": 30000
+        },
+        "expected": "11500",
+        "baseline_finish_reason": "stop",
+        "baseline_text": "TAX=111000",
+        "baseline": "111000",
+        "agent": "11500.00"
+      },
+      {
+        "input": {
+          "annual_income": 600000,
+          "life_premium": 120000,
+          "health_premium": 20000
+        },
+        "expected": "11500",
+        "baseline_finish_reason": "stop",
+        "baseline_text": "TAX=114000",
+        "baseline": "114000",
+        "agent": "11500.00"
+      },
+      {
+        "input": {
+          "annual_income": 600000,
+          "health_premium": 30000
+        },
+        "expected": "19000",
+        "baseline_finish_reason": "stop",
+        "baseline_text": "TAX=114000",
+        "baseline": "114000",
+        "agent": "19000.00"
+      },
+      {
+        "input": {
+          "annual_income": 600000,
+          "receipt_general": 45000,
+          "receipt_special": 25000
+        },
+        "expected": "16500",
+        "baseline_finish_reason": "stop",
+        "baseline_text": "TAX=112500",
+        "baseline": "112500",
+        "agent": "16500.00"
+      },
+      {
+        "input": {
+          "annual_income": 600000,
+          "receipt_special": 25000
+        },
+        "expected": "19000",
+        "baseline_finish_reason": "stop",
+        "baseline_text": "TAX=112500",
+        "baseline": "112500",
+        "agent": "19000.00"
+      },
+      {
+        "input": {
+          "annual_income": 600000,
+          "withheld": 25000
+        },
+        "expected": "21500",
+        "baseline_finish_reason": "stop",
+        "baseline_text": "TAX=115000",
+        "baseline": "115000",
+        "agent": "21500.00"
+      }
+    ]
+  }
+}

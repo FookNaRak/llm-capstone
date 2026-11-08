@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ผู้ช่วยภาษีเงินเดือน 2568</title>
+  <link rel="stylesheet" href="/tax.css">
+  <script src="/tax.js" defer></script>
+</head>
+<body>
+<main>
+  <header>
+    <p class="tag">ภ.ง.ด.91 · ปีภาษี 2568</p>
+    <h1>ผู้ช่วยภาษีเงินเดือน</h1>
+    <p>คำนวณภาษีและดูผลของค่าลดหย่อนที่เข้าเงื่อนไขทีละรายการ</p>
+  </header>
+  <p class="scope">สำหรับการยื่นรายบุคคลที่มีเฉพาะเงินได้จากการจ้างแรงงานและไม่มีเงินได้ยกเว้นกรณีพิเศษ ผลเป็นยอดประมาณการตามรายการที่แอปรองรับ</p>
+  <div class="panels">
+    <section>
+      <h2>คำนวณภาษี</h2>
+      <form id="calculate">
+        <label>เงินได้จากการจ้างแรงงานทั้งปี รวมโบนัส
+          <input name="annual_income" type="number" required min="0" step="0.01" placeholder="เช่น 600000">
+        </label>
+        <fieldset>
+          <legend>ยอดที่เข้าเงื่อนไข (บาท)</legend>
+          <label>ประกันชีวิตตนเอง <input name="life_premium" type="number" min="0" step="0.01" placeholder="0"></label>
+          <label>ประกันสุขภาพตนเอง <input name="health_premium" type="number" min="0" step="0.01" placeholder="0"></label>
+          <label>Easy E-Receipt กลุ่มทั่วไป <input name="receipt_general" type="number" min="0" step="0.01" placeholder="0"></label>
+          <label>Easy E-Receipt กลุ่มพิเศษ <input name="receipt_special" type="number" min="0" step="0.01" placeholder="0"></label>
+          <p>กลุ่มพิเศษรวม OTOP ที่ลงทะเบียนและรายการจากวิสาหกิจชุมชนหรือวิสาหกิจเพื่อสังคมที่เข้าเงื่อนไข กรอกใบเสร็จแต่ละรายการเพียงกลุ่มเดียว ช่องที่ว่างคิดเป็น 0 บาท</p>
+        </fieldset>
+        <label>ภาษีหัก ณ ที่จ่าย (ถ้าทราบ)
+          <input name="withheld" type="number" min="0" step="0.01">
+        </label>
+        <button type="submit">คำนวณ</button>
+      </form>
+    </section>
+    <section>
+      <h2>ถามเงื่อนไขลดหย่อน</h2>
+      <form id="ask">
+        <label>คำถามหรือเคสสมมติ
+          <textarea name="query" rows="5" maxlength="1200" required placeholder="เช่น ค่าไฟที่มี e-Tax Invoice เข้าเงื่อนไข Easy E-Receipt 2.0 ไหม"></textarea>
+        </label>
+        <p>คำถามจะส่งไปยัง class proxy ใช้ตัวเลขสมมติและเว้นข้อมูลระบุตัวตน</p>
+        <button type="submit">ถามผู้ช่วย</button>
+      </form>
+    </section>
+  </div>
+  <section id="output" aria-live="polite" hidden></section>
+</main>
+</body>
+</html>

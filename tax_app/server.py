@@ -1,0 +1,78 @@
+"""Serve the tax calculator and the course-proxy assistant on loopback."""
+
+import argparse
+import json
+from http.server import ThreadingHTTPServer
+from pathlib import Path
+from urllib.parse import urlsplit
+
+from app.agent import ProxyConfigurationError
+from app.server import Handler, MAX_BODY
+from tax_app.agent import ask
+from tax_app.calculator import TaxInput, calculate_tax
+from tax_app.retrieval import TaxRules
+
+
+STATIC = Path(__file__).parent / "static"
+ASSETS = {"/": ("index.html", "text/html"), "/tax.js": ("tax.js", "text/javascript"),
+          "/tax.css": ("tax.css", "text/css")}
+
+
+class TaxHandler(Handler):
+    def do_GET(self):
+        path = urlsplit(self.path).path
+        if path in ASSETS:
+            file, kind = ASSETS[path]
+            self._send(200, (STATIC / file).read_bytes(), kind)
+        else:
+            self._json(404, {"error": "ไม่พบหน้านี้"})
+
+    def do_POST(self):
+        path = urlsplit(self.path).path
+        if path not in ("/api/calculate", "/api/ask"):
+            self._json(404, {"error": "ไม่พบ API นี้"})
+            return
+        if self.headers.get_content_type() != "application/json":
+            self._json(415, {"error": "ใช้ application/json"})
+            return
+        try:
+            length = int(self.headers.get("Content-Length", "0"))
+            if not 0 < length <= MAX_BODY:
+                raise ValueError("Invalid size.")
+            body = self.rfile.read(length)
+            if path == "/api/calculate":
+                profile = TaxInput.model_validate_json(body)
+                data = {"result": calculate_tax(profile),
+                        "citations": self.server.rules.calculation_sources(profile)}
+            else:
+                payload = json.loads(body)
+                if not isinstance(payload, dict) or payload.keys() != {"query"}:
+                    raise ValueError("Expected query.")
+                data = ask(self.server.rules, payload["query"])
+        except ProxyConfigurationError:
+            self._json(503, {"error": "ตั้งค่า OPENAI_API_KEY และ OPENAI_BASE_URL ใน .env ก่อนใช้แชต"})
+            return
+        except ValueError:
+            self._json(400, {"error": "ตรวจปีภาษี รูปแบบข้อมูล และยอดเงินที่กรอก"})
+            return
+        except Exception:
+            self._json(502, {"error": "เรียก class proxy ไม่สำเร็จ กรุณาตรวจค่าการเชื่อมต่อ"})
+            return
+        self._json(200, data)
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--port", type=int, default=8001)
+    args = parser.parse_args()
+    with ThreadingHTTPServer(("127.0.0.1", args.port), TaxHandler) as server:
+        server.rules = TaxRules()
+        print(f"Thai Tax Assistant • http://127.0.0.1:{server.server_port}", flush=True)
+        try:
+            server.serve_forever()
+        except KeyboardInterrupt:
+            pass
+
+
+if __name__ == "__main__":
+    main()
