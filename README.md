@@ -12,6 +12,6 @@ python -m venv .venv
 .\.venv\Scripts\python.exe -m tax_app.server
 ```
 
-Open http://127.0.0.1:8001. For chat, copy `.env.example` to `.env` if needed and fill in the course proxy settings.
+Open http://127.0.0.1:8001 for chat or http://127.0.0.1:8001/calculator for the calculator and tax summary. For chat, copy `.env.example` to `.env` if needed and fill in the course proxy settings.
 
 See [setup, evaluation, and demo](tax_app/README.md).

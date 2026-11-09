@@ -13,7 +13,8 @@ from tax_app.retrieval import TaxRules
 
 
 STATIC = Path(__file__).parent / "static"
-ASSETS = {"/": ("index.html", "text/html"), "/tax.js": ("tax.js", "text/javascript"),
+ASSETS = {"/": ("index.html", "text/html"), "/calculator": ("index.html", "text/html"),
+          "/tax.js": ("tax.js", "text/javascript"),
           "/tax.css": ("tax.css", "text/css")}
 
 
@@ -41,7 +42,10 @@ class TaxHandler(BaseHTTPRequestHandler):
         path = urlsplit(self.path).path
         if path in ASSETS:
             file, kind = ASSETS[path]
-            self._send(200, (STATIC / file).read_bytes(), kind)
+            content = (STATIC / file).read_bytes()
+            if path == "/calculator":
+                content = content.replace(b'data-page="chat"', b'data-page="calculator"', 1)
+            self._send(200, content, kind)
         else:
             self._json(404, {"error": "ไม่พบหน้านี้"})
 

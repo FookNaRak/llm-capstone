@@ -7,9 +7,13 @@
   <link rel="stylesheet" href="/tax.css">
   <script src="/tax.js" defer></script>
 </head>
-<body>
+<body data-page="chat">
 <aside class="navigation">
   <div class="brand"><span aria-hidden="true">฿</span> Tax Desk</div>
+  <nav class="page-menu" aria-label="หน้าหลัก">
+    <a href="/" data-route="chat">แชตกับผู้ช่วย</a>
+    <a href="/calculator" data-route="calculator">คำนวณภาษี</a>
+  </nav>
   <details class="reference-menu">
     <summary>เอกสารที่ใช้</summary>
     <ul>
@@ -22,46 +26,15 @@
   <small>แบบ ภ.ง.ด.91 · ปีภาษี 2568</small>
 </aside>
 <main>
-  <header id="overview">
-    <p class="tag">ปีภาษี 2568</p>
-    <h1>ผู้ช่วยภาษีเงินเดือน</h1>
-    <p>คำนวณภาษีและดูผลของค่าลดหย่อนที่เข้าเงื่อนไขทีละรายการ</p>
-  </header>
-  <p class="scope">สำหรับการยื่นรายบุคคลที่มีเฉพาะเงินได้จากการจ้างแรงงานและไม่มีเงินได้ยกเว้นกรณีพิเศษ ผลเป็นยอดประมาณการตามรายการที่แอปรองรับ</p>
-  <div class="panels">
-    <section id="calculator" class="calculator">
-      <h2>คำนวณภาษี</h2>
-      <form id="calculate">
-        <label>เงินได้จากการจ้างแรงงานทั้งปี รวมโบนัส
-          <input name="annual_income" type="number" required min="0" step="0.01" placeholder="เช่น 600000">
-        </label>
-        <fieldset>
-          <legend>ยอดที่เข้าเงื่อนไข (บาท)</legend>
-          <label>ประกันชีวิตตนเอง <input name="life_premium" type="number" min="0" step="0.01" placeholder="0"></label>
-          <label>ประกันสุขภาพตนเอง <input name="health_premium" type="number" min="0" step="0.01" placeholder="0"></label>
-          <label>Easy E-Receipt กลุ่มทั่วไป <input name="receipt_general" type="number" min="0" step="0.01" placeholder="0"></label>
-          <label>Easy E-Receipt กลุ่มพิเศษ <input name="receipt_special" type="number" min="0" step="0.01" placeholder="0"></label>
-          <p>กลุ่มพิเศษรวม OTOP ที่ลงทะเบียนและรายการจากวิสาหกิจชุมชนหรือวิสาหกิจเพื่อสังคมที่เข้าเงื่อนไข กรอกใบเสร็จแต่ละรายการเพียงกลุ่มเดียว ช่องที่ว่างคิดเป็น 0 บาท</p>
-        </fieldset>
-        <label>ภาษีหัก ณ ที่จ่าย (ถ้าทราบ)
-          <input name="withheld" type="number" min="0" step="0.01">
-        </label>
-        <button type="submit">คำนวณ</button>
-      </form>
-    </section>
-    <div class="side">
-    <section id="output" aria-live="polite">
-      <h2>สรุปภาษี</h2>
-      <div class="summary">
-        <div><span>ภาษีหลังลดหย่อน</span><strong>—</strong></div>
-        <div><span>ภาษีที่ประหยัดได้</span><strong>—</strong></div>
-        <div><span>เงินได้สุทธิ</span><strong>—</strong></div>
-      </div>
-      <p>กรอกข้อมูลในฟอร์มแล้วกดคำนวณเพื่อดูยอดภาษีและรายละเอียดค่าลดหย่อน</p>
-    </section>
+  <div class="chat-page" data-view="chat">
+    <header>
+      <p class="tag">Tax Desk · ปีภาษี 2568</p>
+      <h1>แชตกับผู้ช่วยภาษี</h1>
+      <p>ถามคำถามทั่วไปหรือคุยเรื่องภาษีเงินเดือน</p>
+    </header>
     <section id="assistant" class="assistant">
       <div class="chat-header">
-        <h2>แชตกับผู้ช่วยภาษี</h2>
+        <h2>บทสนทนา</h2>
         <button id="new-chat" type="button" class="secondary" hidden>เริ่มแชตใหม่</button>
       </div>
       <p id="chat-intro">คุยเรื่องทั่วไป ถามเงื่อนไขลดหย่อนปี 2568 หรือลองคำนวณจากเคสสมมติ แล้วถามต่อได้เลย</p>
@@ -75,6 +48,44 @@
         <p id="chat-privacy">คำถามและข้อความล่าสุดจะส่งไปยัง class proxy ใช้ตัวเลขสมมติและเว้นข้อมูลระบุตัวตน</p>
       </form>
     </section>
+  </div>
+  <div data-view="calculator">
+    <header>
+      <p class="tag">ปีภาษี 2568</p>
+      <h1>คำนวณและสรุปภาษีเงินเดือน</h1>
+      <p>คำนวณภาษีและดูผลของค่าลดหย่อนที่เข้าเงื่อนไขทีละรายการ</p>
+    </header>
+    <p class="scope">สำหรับการยื่นรายบุคคลที่มีเฉพาะเงินได้จากการจ้างแรงงานและไม่มีเงินได้ยกเว้นกรณีพิเศษ ผลเป็นยอดประมาณการตามรายการที่แอปรองรับ</p>
+    <div class="panels">
+      <section id="calculator" class="calculator">
+        <h2>คำนวณภาษี</h2>
+        <form id="calculate">
+          <label>เงินได้จากการจ้างแรงงานทั้งปี รวมโบนัส
+            <input name="annual_income" type="number" required min="0" step="0.01" placeholder="เช่น 600000">
+          </label>
+          <fieldset>
+            <legend>ยอดที่เข้าเงื่อนไข (บาท)</legend>
+            <label>ประกันชีวิตตนเอง <input name="life_premium" type="number" min="0" step="0.01" placeholder="0"></label>
+            <label>ประกันสุขภาพตนเอง <input name="health_premium" type="number" min="0" step="0.01" placeholder="0"></label>
+            <label>Easy E-Receipt กลุ่มทั่วไป <input name="receipt_general" type="number" min="0" step="0.01" placeholder="0"></label>
+            <label>Easy E-Receipt กลุ่มพิเศษ <input name="receipt_special" type="number" min="0" step="0.01" placeholder="0"></label>
+            <p>กลุ่มพิเศษรวม OTOP ที่ลงทะเบียนและรายการจากวิสาหกิจชุมชนหรือวิสาหกิจเพื่อสังคมที่เข้าเงื่อนไข กรอกใบเสร็จแต่ละรายการเพียงกลุ่มเดียว ช่องที่ว่างคิดเป็น 0 บาท</p>
+          </fieldset>
+          <label>ภาษีหัก ณ ที่จ่าย (ถ้าทราบ)
+            <input name="withheld" type="number" min="0" step="0.01">
+          </label>
+          <button type="submit">คำนวณ</button>
+        </form>
+      </section>
+      <section id="output" aria-live="polite">
+        <h2>สรุปภาษี</h2>
+        <div class="summary">
+          <div><span>ภาษีหลังลดหย่อน</span><strong>—</strong></div>
+          <div><span>ภาษีที่ประหยัดได้</span><strong>—</strong></div>
+          <div><span>เงินได้สุทธิ</span><strong>—</strong></div>
+        </div>
+        <p>กรอกข้อมูลในฟอร์มแล้วกดคำนวณเพื่อดูยอดภาษีและรายละเอียดค่าลดหย่อน</p>
+      </section>
     </div>
   </div>
 </main>

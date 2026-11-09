@@ -106,6 +106,35 @@ const chatLog = document.getElementById("chat-output");
 const intro = document.getElementById("chat-intro");
 const newChat = document.getElementById("new-chat");
 const history = [];
+const pageLinks = document.querySelectorAll(".page-menu a");
+
+function showPage(moveFocus = false) {
+  const page = window.location.pathname === "/calculator" ? "calculator" : "chat";
+  document.body.dataset.page = page;
+  const heading = document.querySelector(`[data-view="${page}"] h1`);
+  document.title = heading.textContent + " | Tax Desk";
+  for (const link of pageLinks) {
+    if (link.dataset.route === page) link.setAttribute("aria-current", "page");
+    else link.removeAttribute("aria-current");
+  }
+  if (moveFocus) {
+    heading.tabIndex = -1;
+    heading.focus({preventScroll: true});
+    window.scrollTo(0, 0);
+  }
+}
+
+for (const link of pageLinks) {
+  link.addEventListener("click", event => {
+    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    if (window.location.pathname === link.pathname) return;
+    window.history.pushState(null, "", link.pathname);
+    showPage(true);
+  });
+}
+window.addEventListener("popstate", () => showPage(true));
+showPage();
 
 function chatMessage(role, label) {
   const message = add(chatLog, "div", "");

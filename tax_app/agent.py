@@ -76,9 +76,10 @@ CHAT_BEHAVIOR = """Supported topics include salary tax, own life and health prem
 and Easy E-Receipt 2.0. For example, whether an electricity bill qualifies for Easy
 E-Receipt is an in-scope rule question that requires search_rules.
 For small talk or a general knowledge answer that does not require tailored or
-current data, start with CHAT: and make no factual tax claims. For a specific
-request outside the app's scope that needs unavailable data, such as a PC build
-for a budget, say "ข้อมูลยังไม่พอ" in Thai without inventing details.
+current data, start with CHAT: and make no factual tax claims. For questions about
+computer hardware or peripherals, or a specific out-of-scope request that needs
+unavailable data, say "ข้อมูลยังไม่พอ". Questions about tax treatment of purchases
+still require search_rules.
 If a tax calculation needs more information, start with CLARIFY: and ask one specific
 question ending with ?. Retain the details the user already gave. Do not include a
 tax rule, eligibility decision, or computed amount in a clarification.
@@ -87,7 +88,12 @@ question and use the tools. Write in the user's language."""
 TAX_TERMS = re.compile(r"ภาษี|เงินเดือน|รายได้|เงินได้|ลดหย่อน|ใบกำกับ|ใบเสร็จ|ประกัน|ค่าไฟ|"
                        r"ภ\.?\s*ง\.?\s*ด\.?|สรรพากร|"
                        r"\btax\b|\bsalary\b|\bdeductions?\b|e.receipt|e.tax", re.IGNORECASE)
-PC_BUDGET = re.compile(r"(?:ประกอบคอม|จัด(?:สเปก|สเปค)|ชุดคอม).*?(?:งบ|บาท)")
+COMPUTER_HARDWARE = re.compile(
+    r"คีย์\s*บอร์ด|แป้นพิมพ์|เมาส์|ประกอบ\s*คอม|จัด\s*(?:สเปก|สเปค)\s*คอม|ชุดคอม|"
+    r"อะไหล่คอม|อุปกรณ์คอม|เมนบอร์ด|การ์ดจอ|ซีพียู|แรม|"
+    r"\b(?:keyboards?|mouse|mice|motherboards?|gpu|cpu|ram|ssd|pc\s*build)\b",
+    re.IGNORECASE,
+)
 GENERAL_SYSTEM = """Answer the latest user message in its language. You may answer
 ordinary questions using stable general knowledge. Be friendly and concise.
 Do not provide any tax rule, eligibility verdict, or tax estimate in this mode.
@@ -95,7 +101,8 @@ For an ongoing tax scenario, reply with exactly ข้อมูลยังไ�
 If the user wants a specific recommendation that needs outside data, such as
 choosing products for a budget, checking current prices or making a personalized
 decision, reply with exactly ข้อมูลยังไม่พอ. Do not make up data.
-For example, explain what RAM does, but do not choose PC parts for a given budget."""
+Computer hardware and peripherals are out of scope even for general questions
+about their types or functions. Reply with exactly ข้อมูลยังไม่พอ for those."""
 ASK_MONTHS = "ได้รับเงินเดือนตามยอดนี้กี่เดือนในปีภาษี 2568 ครับ?"
 INVALID_MONTHS = f"กรุณาระบุจำนวนเดือนตั้งแต่ 1 ถึง 12 ครับ {ASK_MONTHS}"
 MONTHLY_SALARY = re.compile(
@@ -176,7 +183,7 @@ def ask(rules, query, client=None, *, history=None):
     reply = small_talk(query)
     if reply:
         return {"answer": reply, "result": None, "citations": [], "trace": []}
-    if PC_BUDGET.search("".join(query.split())) and not TAX_TERMS.search(query):
+    if COMPUTER_HARDWARE.search(query) and not TAX_TERMS.search(query):
         return {"answer": "ข้อมูลยังไม่พอ", "result": None, "citations": [], "trace": []}
     salary_reply = salary_turn(rules, query.strip(), previous)
     if salary_reply:
