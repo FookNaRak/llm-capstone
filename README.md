@@ -1,17 +1,58 @@
-# Thai Tax Assistant
+# Tax Desk
 
-A Thai salary tax calculator and eligibility assistant for tax year 2568.
+Tax Desk เป็นเว็บแชตและเครื่องคำนวณภาษีเงินเดือนสำหรับ **ปีภาษี 2568 (ค.ศ. 2025)** ช่วยให้ผู้มีรายได้จากการจ้างแรงงานประเภทเดียวตรวจเงื่อนไขลดหย่อนและดูว่ารายการที่เข้าเกณฑ์ส่งผลต่อภาษีประมาณการเท่าไร คำตอบเรื่องสิทธิมีลิงก์ไปยังหน้าที่เกี่ยวข้องในเอกสารกรมสรรพากร
 
-## Run on Windows
+## ใช้งานอะไรได้บ้าง
 
-From the repository root in PowerShell:
+- **หน้าแชต `/`** ถามเงื่อนไขลดหย่อน ถามต่อจากข้อความก่อนหน้า หรือลองคำนวณด้วยข้อมูลสมมติ ผู้ช่วยค้นหลักฐานและเรียกเครื่องคำนวณตามคำถาม
+- **หน้าคำนวณ `/calculator`** กรอกรายได้ทั้งปีรวมโบนัสและยอดที่ยืนยันว่าเข้าเงื่อนไข แล้วดูเงินได้สุทธิ ยอดที่ใช้สิทธิได้ ภาษีก่อนและหลังหักรายการที่กรอก รวมถึงยอดคงเหลือเมื่อระบุภาษีหัก ณ ที่จ่าย
+- **ขอบเขตการคำนวณ** ครอบคลุมค่าใช้จ่ายจากเงินเดือน ค่าลดหย่อนส่วนตัว เบี้ยประกันชีวิตและสุขภาพตนเอง และ Easy E-Receipt 2.0 สำหรับการยื่นรายบุคคลที่ไม่มีเงินได้ยกเว้นกรณีพิเศษ
+
+## วิธีรันบน Windows
+
+เปิด PowerShell ที่โฟลเดอร์หลักของโปรเจกต์ สร้าง virtual environment และติดตั้ง dependencies
 
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
+```
+
+ถ้าต้องการใช้แชต ให้สร้างไฟล์ `.env` จากตัวอย่าง แล้วใส่ค่า `OPENAI_API_KEY` และ `OPENAI_BASE_URL` ที่ได้รับจากวิชา คำสั่งนี้จะสร้างไฟล์เมื่อยังไม่มีเท่านั้น
+
+```powershell
+if (-not (Test-Path .env)) { Copy-Item .env.example .env }
+```
+
+เริ่มเซิร์ฟเวอร์
+
+```powershell
 .\.venv\Scripts\python.exe -m tax_app.server
 ```
 
-Open http://127.0.0.1:8001 for chat or http://127.0.0.1:8001/calculator for the calculator and tax summary. For chat, copy `.env.example` to `.env` if needed and fill in the course proxy settings.
+เปิด [หน้าแชต](http://127.0.0.1:8001) หรือ [หน้าคำนวณและสรุปภาษี](http://127.0.0.1:8001/calculator) ฟอร์มคำนวณใช้ได้โดยไม่ต้องตั้งค่า class proxy
 
-See [setup, evaluation, and demo](tax_app/README.md).
+## ระบบทำงานอย่างไร
+
+1. **ค้นเอกสาร** `retrieval.py` จัดอันดับข้อความสรุปกฎใน `rules.json` ด้วยการค้นแบบผสมที่ใช้คำตรงกันและเวกเตอร์อักขระ ผลค้นมาพร้อมลิงก์ระบุหน้าเอกสาร
+2. **เลือกเครื่องมือ** `agent.py` เรียก `gemma-4-E4B-it` ผ่าน class proxy ให้เลือกใช้ `search_rules` หรือ `calculate_tax` และตรวจอาร์กิวเมนต์ด้วย Pydantic
+3. **คำนวณ** `calculator.py` คิดภาษีขั้นบันไดและตรวจเพดานลดหย่อนด้วย Python ทั้งแชตและฟอร์มเรียกเครื่องคำนวณเดียวกันผ่านระบบที่ให้บริการด้วย `server.py`
+
+## ผลประเมิน
+
+ชุดประเมินมี 30 เคส แบ่งเป็นคำถามค้นกฎ 15 ข้อและโจทย์คำนวณ 15 ข้อ
+
+| การทดสอบ | Baseline | Tax Desk |
+|---|---:|---:|
+| ค้นกฎ วัด Recall@3 | ค้นคำตรงกัน 33.33% | ค้นแบบผสม 93.33% |
+| คำนวณผ่าน class proxy วัดจำนวนที่ตรงเฉลย | โมเดลตอบเอง 1/15 | Agent เรียกเครื่องคำนวณ 15/15 |
+
+กรณีที่ค้นพลาดคือคำถามเรื่องค่าเน็ตรายเดือน ซึ่งกฎข้อยกเว้นไม่ติดสามอันดับแรก รันการประเมินออฟไลน์ได้ด้วยคำสั่งแรก และเพิ่ม `--live` เพื่อทดสอบผ่าน class proxy
+
+```powershell
+.\.venv\Scripts\python.exe -m tax_app.evaluate
+.\.venv\Scripts\python.exe -m tax_app.evaluate --live
+```
+
+- [ชุดประเมิน](tax_app/gold.json) และ [ผลรายเคส](tax_app/results.json)
+- [รายงาน Capstone ภาษาไทย](output/pdf/tax-desk-capstone-th.pdf)
+- [รายละเอียดทางเทคนิคและแนวทางเดโม](tax_app/README.md)
