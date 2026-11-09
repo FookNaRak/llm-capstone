@@ -60,15 +60,20 @@
       <p>กรอกข้อมูลในฟอร์มแล้วกดคำนวณเพื่อดูยอดภาษีและรายละเอียดค่าลดหย่อน</p>
     </section>
     <section id="assistant" class="assistant">
-      <h2>ถามเงื่อนไขลดหย่อน</h2>
+      <div class="chat-header">
+        <h2>แชตกับผู้ช่วยภาษี</h2>
+        <button id="new-chat" type="button" class="secondary" hidden>เริ่มแชตใหม่</button>
+      </div>
+      <p id="chat-intro">คุยเรื่องทั่วไป ถามเงื่อนไขลดหย่อนปี 2568 หรือลองคำนวณจากเคสสมมติ แล้วถามต่อได้เลย</p>
+      <div id="chat-output" class="chat-log" role="log" aria-label="ประวัติแชต" tabindex="0" hidden></div>
       <form id="ask">
-        <label>คำถามหรือเคสสมมติ
-          <textarea name="query" rows="5" maxlength="1200" required placeholder="เช่น ค่าไฟที่มี e-Tax Invoice เข้าเงื่อนไข Easy E-Receipt 2.0 ไหม"></textarea>
-        </label>
-        <p>คำถามจะส่งไปยัง class proxy ใช้ตัวเลขสมมติและเว้นข้อมูลระบุตัวตน</p>
-        <button type="submit">ถามผู้ช่วย</button>
+        <div class="chat-composer">
+          <textarea name="query" rows="2" maxlength="1200" required aria-label="ข้อความถึงผู้ช่วยภาษี"
+                    aria-describedby="chat-privacy" placeholder="เช่น ค่าไฟใช้สิทธิ Easy E-Receipt ได้ไหม"></textarea>
+          <button type="submit">ส่ง</button>
+        </div>
+        <p id="chat-privacy">คำถามและข้อความล่าสุดจะส่งไปยัง class proxy ใช้ตัวเลขสมมติและเว้นข้อมูลระบุตัวตน</p>
       </form>
-      <div id="chat-output" aria-live="polite" hidden></div>
     </section>
     </div>
   </div>

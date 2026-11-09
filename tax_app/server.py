@@ -18,6 +18,7 @@ ASSETS = {"/": ("index.html", "text/html"), "/tax.js": ("tax.js", "text/javascri
 
 
 MAX_BODY = 8192
+MAX_CHAT_BODY = 32768
 
 
 class TaxHandler(BaseHTTPRequestHandler):
@@ -54,7 +55,7 @@ class TaxHandler(BaseHTTPRequestHandler):
             return
         try:
             length = int(self.headers.get("Content-Length", "0"))
-            if not 0 < length <= MAX_BODY:
+            if not 0 < length <= (MAX_CHAT_BODY if path == "/api/ask" else MAX_BODY):
                 raise ValueError("Invalid size.")
             body = self.rfile.read(length)
             if path == "/api/calculate":
@@ -63,9 +64,11 @@ class TaxHandler(BaseHTTPRequestHandler):
                         "citations": self.server.rules.calculation_sources(profile)}
             else:
                 payload = json.loads(body)
-                if not isinstance(payload, dict) or payload.keys() != {"query"}:
+                if not isinstance(payload, dict) or "query" not in payload or (
+                    payload.keys() - {"query", "history"}
+                ):
                     raise ValueError("Expected query.")
-                data = ask(self.server.rules, payload["query"])
+                data = ask(self.server.rules, payload["query"], history=payload.get("history"))
         except ProxyConfigurationError:
             self._json(503, {"error": "ตั้งค่า OPENAI_API_KEY และ OPENAI_BASE_URL ใน .env ก่อนใช้แชต"})
             return

@@ -70,32 +70,106 @@ function render(output, data) {
   }
 }
 
-for (const id of ["calculate", "ask"]) {
-  document.getElementById(id).addEventListener("submit", async event => {
+async function request(endpoint, body) {
+  const response = await fetch("/api/" + endpoint, {
+    method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(body),
+  });
+  const data = await response.json();
+  if (!response.ok) throw new Error(data.error);
+  return data;
+}
+
+document.getElementById("calculate").addEventListener("submit", async event => {
+  event.preventDefault();
+  const form = event.currentTarget;
+  const body = {tax_year: 2568};
+  for (const [key, value] of new FormData(form)) {
+    if (value !== "") body[key] = Number(value);
+  }
+  const button = form.querySelector("button");
+  const output = document.getElementById("output");
+  button.disabled = true;
+  output.textContent = "กำลังคำนวณ…";
+  try {
+    render(output, await request("calculate", body));
+  } catch (error) {
+    output.textContent = error.message;
+  } finally {
+    button.disabled = false;
+  }
+});
+
+const chatForm = document.getElementById("ask");
+const composer = chatForm.elements.query;
+const send = chatForm.querySelector("button");
+const chatLog = document.getElementById("chat-output");
+const intro = document.getElementById("chat-intro");
+const newChat = document.getElementById("new-chat");
+const history = [];
+
+function chatMessage(role, label) {
+  const message = add(chatLog, "div", "");
+  message.className = "chat-message chat-" + role;
+  add(message, "strong", label).className = "chat-label";
+  return add(message, "div", "");
+}
+
+function scrollChat() {
+  chatLog.scrollTop = chatLog.scrollHeight;
+}
+
+newChat.addEventListener("click", () => {
+  history.length = 0;
+  chatLog.replaceChildren();
+  chatLog.hidden = true;
+  intro.hidden = false;
+  newChat.hidden = true;
+  composer.value = "";
+  composer.focus();
+});
+
+composer.addEventListener("keydown", event => {
+  if (event.key === "Enter" && !event.shiftKey && !event.isComposing && event.keyCode !== 229) {
     event.preventDefault();
-    const output = document.getElementById(id === "ask" ? "chat-output" : "output");
-    const entries = [...new FormData(event.currentTarget)];
-    const body = id === "ask" ? Object.fromEntries(entries) : {tax_year: 2568};
-    if (id === "calculate") {
-      for (const [key, value] of entries) {
-        if (value !== "") body[key] = Number(value);
+    if (!send.disabled && composer.value.trim()) chatForm.requestSubmit();
+  }
+});
+
+chatForm.addEventListener("submit", async event => {
+  event.preventDefault();
+  const query = composer.value.trim();
+  if (!query || send.disabled) return;
+
+  intro.hidden = true;
+  newChat.hidden = false;
+  chatLog.hidden = false;
+  add(chatMessage("user", "คุณ"), "p", query).className = "answer";
+  const reply = chatMessage("assistant", "ผู้ช่วยภาษี");
+  reply.textContent = "กำลังตอบ…";
+  scrollChat();
+  composer.value = "";
+  composer.readOnly = true;
+  send.disabled = true;
+  newChat.disabled = true;
+  try {
+    const data = await request("ask", {query, history});
+    render(reply, data);
+    const answer = Array.from((data.answer || "").trim()).slice(0, 1200).join("").trim();
+    if (answer) {
+      history.push({role: "user", content: query}, {role: "assistant", content: answer});
+      while (history.length > 8 ||
+             history.reduce((total, message) => total + message.content.length, 0) > 4000) {
+        history.splice(0, 2);
       }
     }
-    const buttons = [...document.querySelectorAll("button")];
-    buttons.forEach(button => { button.disabled = true; });
-    output.hidden = false;
-    output.textContent = "กำลังตรวจข้อมูล…";
-    try {
-      const response = await fetch("/api/" + id, {
-        method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(body),
-      });
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.error);
-      render(output, data);
-    } catch (error) {
-      output.textContent = error.message;
-    } finally {
-      buttons.forEach(button => { button.disabled = false; });
-    }
-  });
-}
+  } catch (error) {
+    reply.textContent = error.message;
+    reply.classList.add("chat-error");
+    composer.value = query;
+  } finally {
+    composer.readOnly = false;
+    send.disabled = false;
+    newChat.disabled = false;
+    scrollChat();
+  }
+});
