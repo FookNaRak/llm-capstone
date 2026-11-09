@@ -2,14 +2,33 @@
 
 import json
 import math
+import re
+import unicodedata
 from collections import Counter
 from pathlib import Path
 
-from app.catalog import ngrams, tokens
-
-
 MANUAL = "https://www.rd.go.th/fileadmin/tax_pdf/pit/2568/Ins91_241268.pdf"
 FORM = "https://www.rd.go.th/fileadmin/tax_pdf/pit/2568/241268PIT91.pdf"
+
+
+TOKEN = re.compile(r"[a-z0-9]+|[\u0e00-\u0e7f]+|[^\W\d_]+")
+
+
+def tokens(value):
+    return TOKEN.findall(unicodedata.normalize("NFKC", value).casefold())
+
+
+def ngrams(value):
+    """Sparse character embedding features, including adjacent model tokens."""
+    words = tokens(value)
+    text = f" {' '.join(words)} "
+    compact = "".join(words)
+    return Counter(
+        sample[start : start + size]
+        for sample in (text, compact)
+        for size in (3, 4)
+        for start in range(len(sample) - size + 1)
+    )
 
 
 class TaxRules:

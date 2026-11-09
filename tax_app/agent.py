@@ -4,7 +4,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from app.agent import MODEL, _proxy_client
+from tax_app.proxy import MODEL, _proxy_client
 from tax_app.calculator import TaxInput, calculate_tax
 
 

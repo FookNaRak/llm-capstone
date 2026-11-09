@@ -1,4 +1,3 @@
-const output = document.querySelector("#output");
 const baht = new Intl.NumberFormat("th-TH", {style: "currency", currency: "THB"});
 
 function add(parent, tag, text) {
@@ -8,11 +7,22 @@ function add(parent, tag, text) {
   return element;
 }
 
-function render(data) {
+function render(output, data) {
   output.replaceChildren();
   const result = data.result;
   if (result) {
     add(output, "h2", "ประมาณการภาษีปี 2568");
+    const summary = add(output, "div", "");
+    summary.className = "summary";
+    for (const [label, value] of [
+      ["ภาษีหลังลดหย่อน", result.tax],
+      ["ภาษีที่ประหยัดได้", result.tax_saved],
+      ["เงินได้สุทธิ", result.net_income],
+    ]) {
+      const card = add(summary, "div", "");
+      add(card, "span", label);
+      add(card, "strong", baht.format(Number(value)));
+    }
     const table = add(output, "table", "");
     const rows = [
       ["รายได้ที่ใช้คำนวณ", result.inputs.annual_income],
@@ -22,10 +32,7 @@ function render(data) {
       ["ประกันสุขภาพที่ใช้สิทธิได้", result.allowed.health_premium],
       ["Easy E-Receipt วงเงินทั่วไป", result.allowed.receipt_base],
       ["Easy E-Receipt วงเงินเพิ่ม", result.allowed.receipt_extra],
-      ["เงินได้สุทธิ", result.net_income],
       ["ภาษีก่อนหักประกันและ Easy E-Receipt", result.tax_before_optional],
-      ["ภาษีหลังหักรายการที่กรอก", result.tax],
-      ["ภาษีลดลง", result.tax_saved],
     ];
     for (const [label, value] of [
       ["เบี้ยประกันชีวิตส่วนที่เกินเพดาน", result.disallowed.life_premium],
@@ -66,6 +73,7 @@ function render(data) {
 for (const id of ["calculate", "ask"]) {
   document.getElementById(id).addEventListener("submit", async event => {
     event.preventDefault();
+    const output = document.getElementById(id === "ask" ? "chat-output" : "output");
     const entries = [...new FormData(event.currentTarget)];
     const body = id === "ask" ? Object.fromEntries(entries) : {tax_year: 2568};
     if (id === "calculate") {
@@ -83,7 +91,7 @@ for (const id of ["calculate", "ask"]) {
       });
       const data = await response.json();
       if (!response.ok) throw new Error(data.error);
-      render(data);
+      render(output, data);
     } catch (error) {
       output.textContent = error.message;
     } finally {

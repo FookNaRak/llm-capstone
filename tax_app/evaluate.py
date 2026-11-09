@@ -6,7 +6,7 @@ import re
 from decimal import Decimal
 from pathlib import Path
 
-from app.agent import MODEL, ProxyConfigurationError, _proxy_client
+from tax_app.proxy import MODEL, ProxyConfigurationError, _proxy_client
 from tax_app.agent import ask
 from tax_app.calculator import TaxInput, calculate_tax
 from tax_app.retrieval import TaxRules

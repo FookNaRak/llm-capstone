@@ -2,12 +2,11 @@
 
 import argparse
 import json
-from http.server import ThreadingHTTPServer
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import urlsplit
 
-from app.agent import ProxyConfigurationError
-from app.server import Handler, MAX_BODY
+from tax_app.proxy import ProxyConfigurationError
 from tax_app.agent import ask
 from tax_app.calculator import TaxInput, calculate_tax
 from tax_app.retrieval import TaxRules
@@ -18,7 +17,25 @@ ASSETS = {"/": ("index.html", "text/html"), "/tax.js": ("tax.js", "text/javascri
           "/tax.css": ("tax.css", "text/css")}
 
 
-class TaxHandler(Handler):
+MAX_BODY = 8192
+
+
+class TaxHandler(BaseHTTPRequestHandler):
+    def _send(self, status, content, media_type):
+        self.send_response(status)
+        self.send_header("Content-Type", media_type + "; charset=utf-8")
+        self.send_header("Content-Length", str(len(content)))
+        self.send_header("Cache-Control", "no-store")
+        self.send_header("X-Content-Type-Options", "nosniff")
+        self.send_header("Content-Security-Policy",
+                         "default-src 'self'; base-uri 'none'; frame-ancestors 'none'")
+        self.end_headers()
+        self.wfile.write(content)
+
+    def _json(self, status, payload):
+        self._send(status, json.dumps(payload, ensure_ascii=False).encode("utf-8"),
+                   "application/json")
+
     def do_GET(self):
         path = urlsplit(self.path).path
         if path in ASSETS:

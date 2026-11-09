@@ -8,15 +8,28 @@
   <script src="/tax.js" defer></script>
 </head>
 <body>
+<aside class="navigation">
+  <div class="brand"><span aria-hidden="true">฿</span> Tax Desk</div>
+  <details class="reference-menu">
+    <summary>เอกสารที่ใช้</summary>
+    <ul>
+      <li><a href="https://www.rd.go.th/fileadmin/tax_pdf/pit/2568/Ins91_241268.pdf" target="_blank" rel="noopener noreferrer">คู่มือการกรอก ภ.ง.ด.91</a></li>
+      <li><a href="https://www.rd.go.th/fileadmin/tax_pdf/pit/2568/241268PIT91.pdf" target="_blank" rel="noopener noreferrer">แบบ ภ.ง.ด.91</a></li>
+      <li><a href="https://www.rd.go.th/fileadmin/tax_pdf/pit/2568/241268PIT91.pdf#page=3" target="_blank" rel="noopener noreferrer">ใบแนบรายการลดหย่อน ภ.ง.ด.91</a></li>
+      <li><a href="https://www.rd.go.th/region/08/chiangrai/265/2451.html" target="_blank" rel="noopener noreferrer">คำถาม–คำตอบ Easy E-Receipt 2.0</a></li>
+    </ul>
+  </details>
+  <small>แบบ ภ.ง.ด.91 · ปีภาษี 2568</small>
+</aside>
 <main>
-  <header>
-    <p class="tag">ภ.ง.ด.91 · ปีภาษี 2568</p>
+  <header id="overview">
+    <p class="tag">ปีภาษี 2568</p>
     <h1>ผู้ช่วยภาษีเงินเดือน</h1>
     <p>คำนวณภาษีและดูผลของค่าลดหย่อนที่เข้าเงื่อนไขทีละรายการ</p>
   </header>
   <p class="scope">สำหรับการยื่นรายบุคคลที่มีเฉพาะเงินได้จากการจ้างแรงงานและไม่มีเงินได้ยกเว้นกรณีพิเศษ ผลเป็นยอดประมาณการตามรายการที่แอปรองรับ</p>
   <div class="panels">
-    <section>
+    <section id="calculator" class="calculator">
       <h2>คำนวณภาษี</h2>
       <form id="calculate">
         <label>เงินได้จากการจ้างแรงงานทั้งปี รวมโบนัส
@@ -36,7 +49,17 @@
         <button type="submit">คำนวณ</button>
       </form>
     </section>
-    <section>
+    <div class="side">
+    <section id="output" aria-live="polite">
+      <h2>สรุปภาษี</h2>
+      <div class="summary">
+        <div><span>ภาษีหลังลดหย่อน</span><strong>—</strong></div>
+        <div><span>ภาษีที่ประหยัดได้</span><strong>—</strong></div>
+        <div><span>เงินได้สุทธิ</span><strong>—</strong></div>
+      </div>
+      <p>กรอกข้อมูลในฟอร์มแล้วกดคำนวณเพื่อดูยอดภาษีและรายละเอียดค่าลดหย่อน</p>
+    </section>
+    <section id="assistant" class="assistant">
       <h2>ถามเงื่อนไขลดหย่อน</h2>
       <form id="ask">
         <label>คำถามหรือเคสสมมติ
@@ -45,9 +68,10 @@
         <p>คำถามจะส่งไปยัง class proxy ใช้ตัวเลขสมมติและเว้นข้อมูลระบุตัวตน</p>
         <button type="submit">ถามผู้ช่วย</button>
       </form>
+      <div id="chat-output" aria-live="polite" hidden></div>
     </section>
+    </div>
   </div>
-  <section id="output" aria-live="polite" hidden></section>
 </main>
 </body>
 </html>
