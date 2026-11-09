@@ -2,6 +2,7 @@
 
 import argparse
 import json
+import os
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import urlsplit
@@ -87,11 +88,13 @@ class TaxHandler(BaseHTTPRequestHandler):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--port", type=int, default=8001)
+    render_port = os.environ.get("PORT")
+    parser.add_argument("--host", default="0.0.0.0" if render_port else "127.0.0.1")
+    parser.add_argument("--port", type=int, default=render_port or 8001)
     args = parser.parse_args()
-    with ThreadingHTTPServer(("127.0.0.1", args.port), TaxHandler) as server:
+    with ThreadingHTTPServer((args.host, args.port), TaxHandler) as server:
         server.rules = TaxRules()
-        print(f"Thai Tax Assistant • http://127.0.0.1:{server.server_port}", flush=True)
+        print(f"Thai Tax Assistant • http://{args.host}:{server.server_port}", flush=True)
         try:
             server.serve_forever()
         except KeyboardInterrupt:
