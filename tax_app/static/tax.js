@@ -104,6 +104,7 @@ const composer = chatForm.elements.query;
 const send = chatForm.querySelector("button");
 const chatLog = document.getElementById("chat-output");
 const intro = document.getElementById("chat-intro");
+const exampleButtons = intro.querySelectorAll(".chat-example-buttons button");
 const newChat = document.getElementById("new-chat");
 const history = [];
 const pageLinks = document.querySelectorAll(".page-menu a");
@@ -163,6 +164,15 @@ composer.addEventListener("keydown", event => {
     if (!send.disabled && composer.value.trim()) chatForm.requestSubmit();
   }
 });
+
+for (const example of exampleButtons) {
+  example.addEventListener("click", () => {
+    if (send.disabled) return;
+    composer.value = example.textContent.trim();
+    chatForm.requestSubmit();
+    composer.focus({preventScroll: true});
+  });
+}
 
 chatForm.addEventListener("submit", async event => {
   event.preventDefault();

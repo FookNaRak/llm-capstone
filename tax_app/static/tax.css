@@ -53,6 +53,11 @@ a { color: #493ba8; }
 .chat-header { justify-content: space-between; flex-wrap: wrap; margin-bottom: .85rem; }
 .chat-header h2 { margin: 0; }
 .chat-header .secondary { background: #eeedf9; color: #392a93; font-size: .85rem; }
+.chat-examples { margin-bottom: 1rem; }
+.chat-examples p { margin: 0 0 .45rem; color: #515a75; font-size: .88rem; }
+.chat-example-buttons { display: flex; flex-wrap: wrap; gap: .45rem; }
+.chat-example-buttons button { padding: .45rem .7rem; border: 1px solid #d7d0fa; background: #f5f3ff; color: #392a93; font-size: .88rem; text-align: left; }
+.chat-example-buttons button:hover { background: #e8e4ff; }
 .chat-composer { align-items: end; }
 .chat-composer textarea { flex: 1; }
 .chat-composer button { min-width: 3.5rem; }

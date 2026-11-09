@@ -41,4 +41,4 @@ Thai Tax Assistant helps salaried individuals understand the eligibility and imp
 
 [Official 2568 filing materials](https://www.rd.go.th/67335.html) · [P.N.D.91 instructions](https://www.rd.go.th/fileadmin/tax_pdf/pit/2568/Ins91_241268.pdf)
 
-[Capstone report in Thai](../output/pdf/tax-desk-capstone-th.pdf)
+The Thai Capstone report is submitted separately as a PDF.

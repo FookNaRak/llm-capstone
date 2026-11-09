@@ -37,12 +37,22 @@
         <h2>บทสนทนา</h2>
         <button id="new-chat" type="button" class="secondary" hidden>เริ่มแชตใหม่</button>
       </div>
-      <p id="chat-intro">คุยเรื่องทั่วไป ถามเงื่อนไขลดหย่อนปี 2568 หรือลองคำนวณจากเคสสมมติ แล้วถามต่อได้เลย</p>
+      <div id="chat-intro">
+        <p>คุยเรื่องทั่วไป ถามเงื่อนไขลดหย่อนปี 2568 หรือลองคำนวณจากเคสสมมติ แล้วถามต่อได้เลย</p>
+        <div class="chat-examples" role="group" aria-labelledby="chat-examples-label">
+          <p id="chat-examples-label">กดตัวอย่างเพื่อส่งคำถามได้เลย</p>
+          <div class="chat-example-buttons">
+            <button type="button">เงินเดือนเดือนละ 20,000 บาท ต้องเสียภาษีไหม?</button>
+            <button type="button">ค่าไฟใช้สิทธิ Easy E-Receipt ได้ไหม?</button>
+            <button type="button">ประกันชีวิตกับประกันสุขภาพมีเพดานลดหย่อนรวมไหม?</button>
+          </div>
+        </div>
+      </div>
       <div id="chat-output" class="chat-log" role="log" aria-label="ประวัติแชต" tabindex="0" hidden></div>
       <form id="ask">
         <div class="chat-composer">
           <textarea name="query" rows="2" maxlength="1200" required aria-label="ข้อความถึงผู้ช่วยภาษี"
-                    aria-describedby="chat-privacy" placeholder="เช่น ค่าไฟใช้สิทธิ Easy E-Receipt ได้ไหม"></textarea>
+                    aria-describedby="chat-privacy" placeholder="พิมพ์คำถามถึงผู้ช่วยภาษี…"></textarea>
           <button type="submit">ส่ง</button>
         </div>
         <p id="chat-privacy">คำถามและข้อความล่าสุดจะส่งไปยัง class proxy ใช้ตัวเลขสมมติและเว้นข้อมูลระบุตัวตน</p>

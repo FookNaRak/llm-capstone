@@ -54,5 +54,5 @@ if (-not (Test-Path .env)) { Copy-Item .env.example .env }
 ```
 
 - [ชุดประเมิน](tax_app/gold.json) และ [ผลรายเคส](tax_app/results.json)
-- [รายงาน Capstone ภาษาไทย](output/pdf/tax-desk-capstone-th.pdf)
+- รายงาน Capstone ภาษาไทยเป็นไฟล์ PDF สำหรับส่งแยก
 - [รายละเอียดทางเทคนิคและแนวทางเดโม](tax_app/README.md)
